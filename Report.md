@@ -107,9 +107,11 @@ There were some parts of the dataset that needed to be cleaned up. There were na
 Since these nan values and their rows only took up about 6% of the data, therefore, those rows were dropped. 
 
 
-## 3. Exploratory Data Analysis
+## 3. Methodolgy
 
-#### 3.1 Target Variable
+### 3.1 Exploratory Data Analysis
+
+#### Target Variable
 
 Conveniently, our target was already labeled as a severity description code, but there was also a little more information that tells us about this data set. The total number of collision incidents in our dataset is 194,673. Here is a breakdown of the target:
 
@@ -126,7 +128,7 @@ Conveniently, our target was already labeled as a severity description code, but
 
 In the table and plot, we can see that a non-injury collision occurs ~70% of the time versus an injury collision ~30% of the time. So here we can tell that we have an unbalanced dataset, but in the future if we want to make this more balanced by finding additional datasets to join with this data.
 
-#### 3.2 Break-down of collision types
+#### Break-down of collision types
 
 The collision types for this dataset are labeled as: head on, right turn, unkown, cycles, pedestrian, left turn, sideswipe, other, rear ended, angles and parked car. This data shows that accidents involving parked cars occur 25.3% of the time, followed by accidents at an angle (18.3%), and then rear-ended (~18.0%). The lowest collision types were head-on (1.0%), right-turn (1.6%), and cycles (2.9%).
 
@@ -137,7 +139,7 @@ The collision types for this dataset are labeled as: head on, right turn, unkown
 
 A key take-away is that some of the less prevalent types of collisions may be associated with injury. Since, this dataset is 30% injury and 70% non-injury, it would make sense if the larger population of accidents (non-injury) occured more with parked cars involved. 
 
-#### 3.3 Break-down of junction types and address types
+#### Break-down of junction types and address types
 
 Sometimes accidents in general can be related to the location or circumstances of where they occur. That is why it's important to look at junction and address types to determine is there a certain layout of the road that leads to having more accidents.
 
@@ -151,7 +153,7 @@ The data shows that 66% of the time the accident occurs on a block, then 34% at 
 From the data, it was calculated that around 48% of these accidents are mid-block and not related to intersections, which coincides with the address type data. The second prevalent is at an intersection or intersection related, which is also confirmed by the address type histogram a shown before this plot.
 
 
-#### 3.4 Break-down of road conditions, weather, and light conditions
+#### Break-down of road conditions, weather, and light conditions
 
 Another contributing factor to an accident besides the layout of the road is what are other conditions such as weather, light, and other road conditions. We look further into these topics and see that there are also important features in this data.
 
@@ -168,23 +170,53 @@ The weather conditions also confirmed what is seen in the road conditions. It is
 
 Around 61% of the accidents happened during the day and almost 26% of the accidents happened at night with the street lamps on. So now, we can see that there is a relationship between the weather, light, and road conditions. Their top two percentage values are similar in ratio to each other, which could help separate out whether someone was injured in an accident or not. 
 
+#### Accident Vehicle counts 
 
-## 4.Methodology 
+The final, but most essential histogram that is vital to this case-study is the vehicle count in the accidents. The more cars involved in an accident adds a higher chance of someone being injured because there are more cars and people involved. This is reflected in the following histogram:
 
-For our methodology we will use logistic regression, decision tree and random forest for our initial investigations. 
+![vehicle counts](https://github.com/analisahill/Coursera_Capstone/blob/master/images/vehicle_counts.png?raw=true)
 
-#### Logistic Regression
+One thing to note is that as the number of vehicles involved in the accident increases, the number decreases. This is most likely due to lack of statistics and incidents where there are more than 5 cars involved is rarer. If we want to sample these numbers better, we'd need to obtain more data to see what happens when the vehicle count gets higher.
 
-#### Decision Tree
+
+### 3.2 Models
+
+The models that were explored were logistic regression, decision tree and random forest for our initial investigations. Below is the classification report for all those models.
+
+
+![classification report](https://github.com/analisahill/Coursera_Capstone/blob/master/images/classification_report.png?raw=true)
+
+
+For each model the ROC curves and AUC were evaluated. All of the models are comparable, but on closer inspection it shows that the random forest is slightly better than the logistic regression and decision tree.
+
+![ROC](https://github.com/analisahill/Coursera_Capstone/blob/master/images/ROC.png?raw=true)
+
+ We want to pick the random forest as our final model because in this circumstance, if someone was injured we'd rather have the AUC as close as one as possible or have a higher true positive rate than a higher false positive rate. Even if the random forest is the better model, the other models still give us information about what makes injury accidents more likely to happen. Therefore, in this case-study I utilize all three models to understand the data and use the random forest as my final model.
+
+
+## 4. Results and Discussion
+
+
+**Logistic Regression**
+
+
+
+
+
+
+
+**Decision Tree**
+
 ![dtree](https://github.com/analisahill/Coursera_Capstone/blob/master/images/dtree_render.png?raw=true)
 
-#### Random Forest
-
-### Model Performance
+**Random Forest**
 
 
 
-## Conclusion
 
-## Future Directions
+
+
+## 5. Conclusions
+
+In this study, I looked at accident severity to predict if someone who was in an accident what is the chance that they were injured. The important features that I indentified are the vehicle counts in the accident, road conditions, weather conditions, light conditions, junction type, address type, and collision types that contribute to injuries. I built a logistic regression and decision tree models which turned out to be not as robust as the random forest. The random forest model can help first responders determine whether they should dispatch paramedics, police, or none. Future directions could be finding a method to determine how many responders should be sent depending on the accident severity. 
 
