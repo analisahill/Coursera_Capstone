@@ -187,7 +187,7 @@ The models that were explored were logistic regression, decision tree and random
 ![classification report](https://github.com/analisahill/Coursera_Capstone/blob/master/images/classification_report.png?raw=true)
 
 
-For each model the ROC curves and AUC were evaluated. All of the models are comparable, but on closer inspection it shows that the random forest is slightly better than the logistic regression and decision tree.
+For each model the ROC (reciever operator characteristic) curves and AUC (area under the curve) were evaluated. The ROC curve calculates the true postive rate versus false positive rate of our classifier. The ROC of each model look relatively comparable, however, the AUC sheds a little more information. The closer the AUC is to 1, the better classifier it is. In the end, the random forest is a little better than the decision tree and logistic regression with an AUC coming in at 0.7703. 
 
 ![ROC](https://github.com/analisahill/Coursera_Capstone/blob/master/images/ROC.png?raw=true)
 
@@ -197,26 +197,64 @@ For each model the ROC curves and AUC were evaluated. All of the models are comp
 ## 4. Results and Discussion
 
 
-**Logistic Regression**
+### Logistic Regression
+
+The logistic regression model gave some important description of what were the most important features that the model tells us about what is the difference between injury and no injury accidents. 
+
+![lr feature importance](https://github.com/analisahill/Coursera_Capstone/blob/master/images/lr_feature_importance.png?raw=true)
+
+In this bar plot we can see that according to the model, injury accidents are caused when the collision type involves a pedestrian or cyclist. The next contributing factor is the vehicle count. These are shown by the postive values on the bar plot. It makes logical sense that the more vehicles involved in an accident means that there is a higher probability of getting injured because there are more people involved. It also makes sense that a non-injury incident happens most with parked cars. This non-injury accident is determined by the negative value on the bar plot. Next, we can go to the decision tree to see what information that gives us. 
 
 
 
 
+### Decision Tree
 
-
-
-**Decision Tree**
+The decision tree will be able to tell us the order or hierarchy that will lead to an accident. We can plot the actual tree, which is shown below (click on the plot to be able to zoom in). 
 
 ![dtree](https://github.com/analisahill/Coursera_Capstone/blob/master/images/dtree_render.png?raw=true)
 
-**Random Forest**
+Below are some snapshots of the tree. The first two snapshots shows the hierarchy of what needs to occur if there is an injury accident and the third is what leads to a non-injury accident.
+
+**Injury Tree Snapshot 1**
+
+![dtree_injury 1](https://github.com/analisahill/Coursera_Capstone/blob/master/images/dtree_render_injury1.png?raw=true)
+
+**Injury Tree Snapshot 2**
+
+![dtree_injury 2](https://github.com/analisahill/Coursera_Capstone/blob/master/images/dtree_render_injury2.png?raw=true)
+
+**No Injury Tree Snapshot**
+
+![dtree_no injury](https://github.com/analisahill/Coursera_Capstone/blob/master/images/dtree_render_no_injury1.png?raw=true)
 
 
+Lastly, we'll look at the random forest
 
 
+### Random Forest
 
+The random forest is considered our best model and will be used as our final model. Making a bar plot of the feature importance tells us how the model used those features to decide between whether there was a non-injury accident and injury accident. This is similar to the decision tree and almost nearly the same, but weighted a little differently because of the ensemble nature of the model, but gives us the same trend as with the decision tree.
+
+![rf feature importance](https://github.com/analisahill/Coursera_Capstone/blob/master/images/rf_feature_importance.png?raw=true)
+
+The bar plot result tells us that parked car and pedestrian collision type plays the largest role in deciding whether it was an injury or no injury accident. This confirms what we found in the logistic regression model, although the logistic regression model tells us more about which features contribute directly from it's negative and positive values in the bar plot.
+
+#### Real-world Field Test of the Random Forest
+
+To see how our random forest model will perform in the real world, we'll choose some features and feed it into our model. For example, let's say that we are a emergency responder and we get a call. We ask for the facts about the accident that has just occured (i.e. road condition, light condition, weather, addresstype, collision type, junction type, vehicle count) and from there decide to dispatch ambulances, police, and other responders based on that information. For a test case we can input the features:
+
+* ROADCOND='Wet'
+* LIGHTCOND='Dark - No Street Lights' 
+* WEATHER='Fog/Smog/Smoke'
+* ADDRTYPE='Intersection'
+* COLLISIONTYPE='Pedestrian'
+* JUNCTIONTYPE='At Intersection (but not related to intersection)'
+* VEHCOUNT=2
+
+After inputting these features into our model, we recieved a probability of injury of 73%. If an emergency operator had this number, they would dispatch an ambulence to the scene. Then if they knew the vehicle count they would decide on how many ambulances to send. This is just a real-world example of how this model can be used in a typical scenario.
 
 ## 5. Conclusions
 
-In this study, I looked at accident severity to predict if someone who was in an accident what is the chance that they were injured. The important features that I indentified are the vehicle counts in the accident, road conditions, weather conditions, light conditions, junction type, address type, and collision types that contribute to injuries. I built a logistic regression and decision tree models which turned out to be not as robust as the random forest. The random forest model can help first responders determine whether they should dispatch paramedics, police, or none. Future directions could be finding a method to determine how many responders should be sent depending on the accident severity. 
+In this study, I looked at accident severity to predict if someone who was in an accident what is the chance that they were injured. The important features that I indentified injury accidents are caused when the collision type that involves a pedestrian or cyclist. The next contributing factor is the vehicle count. I built a logistic regression and decision tree models which turned out to be not as robust as the random forest. The random forest model can help first responders determine whether they should dispatch paramedics, police, or none. Future directions could be finding a method to determine how many responders should be sent depending on the accident severity. 
 
